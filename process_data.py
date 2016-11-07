@@ -4,7 +4,7 @@ from pyspark.sql import SQLContext, Row
 from pyspark.sql.functions import sum
 import sys, datetime
 
-fair_inputs = sys.argv[1]
+fare_inputs = sys.argv[1]
 trip_inputs = sys.argv[2]
 output = sys.argv[3]
 
@@ -43,10 +43,10 @@ trip_schema = StructType([
     			StructField('dropLat', DoubleType(), False),
 ])
 
-fairDF = (sqlContext.read.format('com.databricks.spark.csv')
+fareDF = (sqlContext.read.format('com.databricks.spark.csv')
                     .options(header='true',inferschema='false')
                     .schema(fare_schema)
-                    .load(fair_inputs).repartition(75))
+                    .load(fare_inputs).repartition(75))
 
 tripDF = (sqlContext.read.format('com.databricks.spark.csv')
                     .options(header='true',mode="DROPMALFORMED",inferschema='false')
@@ -88,14 +88,14 @@ tripDF = (sqlContext.read.format('com.databricks.spark.csv')
 #print ''
 #print ''
 
-tripData = (tripDF.join(fairDF, (tripDF['carId'] == fairDF['carId']) & \
-								(tripDF['driverId'] == fairDF['driverId']) & \
-								(tripDF['pickupTime'] == fairDF['pickupTime']) & \
-								(tripDF['vendorType'] == fairDF['vendorType']),
+tripData = (tripDF.join(fareDF, (tripDF['carId'] == fareDF['carId']) & \
+								(tripDF['driverId'] == fareDF['driverId']) & \
+								(tripDF['pickupTime'] == fareDF['pickupTime']) & \
+								(tripDF['vendorType'] == fareDF['vendorType']), \
 								'inner')
-					.drop(fairDF['carId'])
-					.drop(fairDF['driverId'])
-					.drop(fairDF['vendorType'])
-					.drop(fairDF['pickupTime'])).coalesce(30)
+					.drop(fareDF['carId'])
+					.drop(fareDF['driverId'])
+					.drop(fareDF['vendorType'])
+					.drop(fareDF['pickupTime'])).coalesce(30)
 
 tripData.write.format('parquet').save(output,mode='overwrite')
