@@ -10,11 +10,11 @@ read data_dir
 echo "Enter Year of Data: "
 read year
 
-#mkdir $output
+mkdir $output
 output="$output$year"
-#mkdir $output
+mkdir $output
 
-for i in {2..12}
+for i in {1..12}
 do
 	echo "Removing fare hdfs directory ... "
 	hdfs dfs -rm -r $hdfs_fare
