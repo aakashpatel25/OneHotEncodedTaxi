@@ -10,7 +10,7 @@ read data_dir
 echo "Enter Year of Data: "
 read year
 
-mkdir $output
+#mkdir $output
 output="$output$year"
 mkdir $output
 
