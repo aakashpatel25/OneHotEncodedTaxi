@@ -1,7 +1,7 @@
 # OneHotEncodedTaxi
 Big Data Project
 
-## How to read Parquet file
+### How to read Parquet file
 
 inputs = 'parquetfiledirectory/'
 
