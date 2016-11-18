@@ -1,0 +1,48 @@
+{
+	"Version": "2008-10-17",
+	"Id": "Policy1357935677554",
+	"Statement": [
+		{
+			"Sid": "Stmt1357935647218",
+			"Effect": "Allow",
+			"Principal": {
+				"AWS": "arn:aws:iam::AWS-ACCOUNT-NUMBER:root"
+			},
+			"Action": "s3:*",
+			"Resource": "arn:aws:s3:::taxidata.com/*"
+		},
+		{
+			"Sid": "Stmt1357935676138",
+			"Effect": "Allow",
+			"Principal": {
+				"AWS": "arn:aws:iam::AWS-ACCOUNT-NUMBER:root"
+			},
+			"Action": [
+				"s3:GetObject",
+				"s3:PutObject"
+			],
+			"Resource": "arn:aws:s3:::taxidata.com/*"
+		},
+		{
+			"Sid": "Stmt1",
+			"Effect": "Allow",
+			"Principal": {
+				"AWS": "arn:aws:iam::AWS-ACCOUNT-NUMBER:root"
+			},
+			"Action": "s3:*",
+			"Resource": "arn:aws:s3:::taxidata.com/*"
+		},
+		{
+			"Sid": "Stmt2",
+			"Effect": "Allow",
+			"Principal": {
+				"AWS": "arn:aws:iam::AWS-ACCOUNT-NUMBER:root"
+			},
+			"Action": [
+				"s3:GetObject",
+				"s3:PutObject"
+			],
+			"Resource": "arn:aws:s3:::taxidata.com/*"
+		}
+	]
+}
