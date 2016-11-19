@@ -1,7 +1,7 @@
 # OneHotEncodedTaxi
 Big Data Project
 
-<br><br>
+<br>
 
 ## Data Dictionary
 
@@ -35,7 +35,7 @@ columns = ['carId','driverId','vendorType','pickupTime','paymentType','fareAmoun
 		   'tripTime','tripDistance','pickupLong','pickupLat','dropLong','dropLat']
 ```
 
-<br><br>
+<br>
 
 ## Read Parquet file
 
@@ -46,7 +46,7 @@ tipsData = myParquet.select(column names)
 
 tipsData.show()
 
-<br><br>
+<br>
 
 ## Execute Spark Command on AWS EMR
 
@@ -63,7 +63,8 @@ spark-submit --deploy-mode cluster --master yarn --num-executors 5 --executor-co
 ```shell
 aws emr add-steps --cluster-id j-xxxxx --steps Type=spark,Name=SparkWordCountApp,Args=[--deploy-mode,cluster,--master,yarn,--conf,spark.yarn.submit.waitAppCompletion=false,--num-executors,5,--executor-cores,5,--executor-memory,20g,s3://codelocation/wordcount.py,s3://inputbucket/input.txt,s3://outputbucket/],ActionOnFailure=CONTINUE
 ```
-<br><br>
+
+<br>
 
 ## Take input from S3 using EMR
 To take input from S3 bucket in the spark program while running it on EMR just write path to S3 bucket extensively. Example below illustrates simple program that uses S3 as input source.
