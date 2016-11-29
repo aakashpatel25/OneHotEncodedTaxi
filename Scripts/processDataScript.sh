@@ -1,5 +1,7 @@
 #!/bin/bash
 
+## Process the dataset for cleaning and conver it to parquet files.
+
 data_dir="2013"
 hdfs_fare="fare/"
 hdfs_trip="trip/"

@@ -1,3 +1,8 @@
+'''
+    @amoghari
+
+    Converts all CSV files in to parquet file.
+'''
 from pyspark.sql.types import StructType, StructField, StringType, TimestampType, LongType, FloatType, IntegerType, DoubleType
 from pyspark import SparkConf,SparkContext
 from pyspark.sql import SQLContext, Row

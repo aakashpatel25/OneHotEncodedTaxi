@@ -1,5 +1,7 @@
 #!/bin/bash
 
+## Move all the files in the proper directory.
+
 echo "Enter S3 Directory Location: "
 read s3_location
 echo "Enter Input Path: "

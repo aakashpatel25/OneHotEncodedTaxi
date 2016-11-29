@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#Upload to AWS S3 bucket from local directory.
+
 echo "Enter S3 Directory Location: "
 read s3_location
 echo "Enter Input Path: "
