@@ -23,31 +23,35 @@ def parseSpeed(speed):
 	Convert speed to float with 1 decimal place
 	If speed is None, set it to -1
 	'''
-	if speed is not None:
-		return float(int(speed * 10)) / 10
-	else:
-		return float(-1)
+	return float(int(speed * 10)) / 10
 
-myParquet = sqlContext.read.parquet(year1,year2,year3,year4)
+inputDir = '/home/julie/School/BDProjectData/2013/1'
+myParquet = sqlContext.read.parquet(inputDir)
+
+# myParquet = sqlContext.read.parquet(year1,year2,year3,year4)
 
 timeDist = myParquet.select(year('pickupTime').alias('year'), month('pickupTime').alias('month'), hour('pickupTime').alias('hour'),
-	'tripTime', 'tripDistance')
+	'tripTime', 'tripDistance').where('tripTime > 0').where('tripDistance > 0')
 
-speed = timeDist.withColumn('speed', timeDist['tripDistance']/(timeDist['tripTime']/3600)).cache()
+allSpeed = timeDist.withColumn('speed', timeDist['tripDistance']/(timeDist['tripTime']/3600))
+
+# 100 miles an hour is super fast (160 km/h)
+# but still a feasible speed for a car (if you're a maniac)
+speed = allSpeed.where('speed < 100')
 
 # Metric 1: average speed by month
-averageSpeedByMonth = speed.groupBy('year','month').mean('speed').coalesce(1)
+averageSpeedByMonth = speed.groupBy('year','month').mean('speed').orderBy('year','month').coalesce(1)
     
 averageSpeedByMonth.write.mode('overwrite').format("com.databricks.spark.csv").save('monthlyAvgSpeed')
 
 # Metric 2: average speed by hour
-averageSpeedByHour = speed.groupBy('hour').mean('speed').coalesce(1)
+averageSpeedByHour = speed.groupBy('hour').mean('speed').orderBy('hour').coalesce(1)
 
 averageSpeedByHour.write.mode('overwrite').format("com.databricks.spark.csv").save('hourlyAvgSpeed')
 
 # Metric 3: number of trips made at certain speed
 # We can use this to see if there are any anomalies or general trends
-speedRDD = speed.select('speed').rdd
+speedRDD = allSpeed.select('speed').rdd
 totalBySpeedRDD = speedRDD.map(lambda s: (parseSpeed(s.speed), 1)).reduceByKey(add).sortByKey()
 totalBySpeed = sqlContext.createDataFrame(totalBySpeedRDD, ['speed', 'count']).coalesce(1)
 
