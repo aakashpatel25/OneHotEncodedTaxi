@@ -1,7 +1,7 @@
 # OneHotEncodedTaxi
-Big Data Project
+CMPT - 732 (Programming in Big Data Project)
 
-Analyzed New York Yellow Taxi's data from 2010 to 2013 to determine various patterns such as driver's yearly salary, surcharge prediction, passenger count, trip counts and many more using Amazon Web Services. Size of the dataset was 140 GB. Used Python, Spark, Parquet, Tableau, AWS EC2, AWS EMR, AWS S3, AWS IAM for performing analysis.
+New York is one of the busiest cities in the world. People in New York tend to use Taxi alot since last few years. Currently, in New York City, there are few million rides been taken by people in a month. There are many hidden pattern which analyses the general behavior of the population as well as the New York Taxi services. We are using a dataset of around 1.5 Billion trips to analyze New York City's Yellow Taxi data from 2010 to 2013 to determine various patterns such as driver's yearly salary, surcharge prediction, disputes behavior, passenger count, trip counts and many more using Amazon Web Services. Size of the dataset was 140 GB. Used Python, Spark, Parquet, Tableau, AWS EC2, AWS EMR, AWS S3, AWS IAM for performing analysis.
 
 <br>
 
@@ -27,7 +27,7 @@ StructType([
     			StructField('tripDistance', FloatType(), False),
     			StructField('pickupLong', DoubleType(), False),
     			StructField('pickupLat', DoubleType(), Flase),
-    			StructField('dropLong', DoubleType(), False),
+    			StructField('dropLong', DoubleType(), False),Curr
     			StructField('dropLat', DoubleType(), False),
 ])
 
