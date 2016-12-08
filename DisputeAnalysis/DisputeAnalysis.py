@@ -1,9 +1,13 @@
 '''
 @author:ruturajp
-@date:28-Nov-2016
 
-Find the disputed trips by month, year.
+The purpose of this program is to find the disputed trips from the dataset which can release 
+hidden patterns of the disputes happening in the Taxi Trips.
+The output filtered data will be imported to Tableau inorder to find details with visualizations.
+Program is divided into following parts --
+
 Find most disputed trips on an hour
+Find the disputed trips by month, year.
 Find the amount of the trips which are disputed.
 
 '''
@@ -13,7 +17,7 @@ import sys, operator
 import re, string
 from pyspark.sql.functions import *
 
-conf = SparkConf().setAppName('Payment Type Analysis')
+conf = SparkConf().setAppName('Trip Dispute Analysis')
 sc = SparkContext(conf=conf)
 
 sqlContext= SQLContext(sc)
