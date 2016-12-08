@@ -53,7 +53,7 @@ trainRDD = (trainRDD.map(lambda x:(x['surcharge'],[ele for ele in x if x!=x['sur
 testRDD = (testRDD.map(lambda x:(x['surcharge'],[ele for ele in x if x!=x['surcharge']]))
                   .map(lambda (lab,feat):(convertSurcharge(lab),vendorType(feat))))
 
-model = LogisticRegressionWithLBFGS.train(trainRDD, iterations=1000,numClasses=2)
+model = LogisticRegressionWithLBFGS.train(trainRDD, iterations=10,numClasses=2)
 model.save(sc, "s3://taxidata.com/SurchargeAnalysis/ML/lrm_model.model")
 
 # model= LogisticRegressionModel.load(sc, "lrm_model.model")

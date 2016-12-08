@@ -11,6 +11,7 @@ Required setup:
 - pip install shapely
 Note: this takes a _long_ time. For a single parquet file on my laptop, it took about 20 minutes. 
 '''
+
 from pyspark import SparkContext, SparkConf
 from pyspark.sql import SQLContext
 from pyspark.sql.types import StringType
@@ -22,8 +23,13 @@ conf = SparkConf().setAppName('set borough')
 sc = SparkContext(conf=conf)
 sqlContext = SQLContext(sc)
 
-inputDir = '/home/julie/School/BDProjectData/2013/1'
-outDir = '/home/julie/School/BDProjectData/2013/1/withNbhd'
+s3 = 's3://taxidata.com/'
+year1 = s3+'2010/'
+year2 = s3+'2011/'
+year3 = s3+'2012/'
+year4 = s3+'2013/'
+
+outDir = 's3://taxidata.com/data/2010/'
 geojsonFile = 'nynta.geojson'
 
 nbhData = []
@@ -51,14 +57,16 @@ def findBorough(neighborhood):
 neighborhoodUDF = udf(findNeighborhood, StringType())
 boroughUDF = udf(findBorough, StringType())
 
-dataAll = sqlContext.read.parquet(inputDir + '/*.parquet')
-data = dataAll.repartition(100)
+data = sqlContext.read.parquet(year1,year2,year3,year4)
 dataWithPickupNbhd = data.withColumn('pickupNeighborhood', 
 	neighborhoodUDF('pickupLong', 'pickupLat'))
+print 'Loaded df....'
 dataWithPickup = dataWithPickupNbhd.withColumn('pickupBorough', boroughUDF('pickupNeighborhood'))
+print 'Added pickup location'
 dataWithDropNbhd = dataWithPickup.withColumn('dropNeighborhood', 
 	neighborhoodUDF('dropLong', 'dropLat'))
+print 'Added dropoff location'
 dataWithBoth = dataWithDropNbhd.withColumn('dropBorough', boroughUDF('dropNeighborhood'))
-outdata = dataWithBoth.coalesce(30)
 #outdata.show()
-outdata.write.format('parquet').save(outDir, mode='overwrite')
+print 'Will Strat saving now....'
+dataWithBoth.write.format('parquet').save(outDir, mode='overwrite')

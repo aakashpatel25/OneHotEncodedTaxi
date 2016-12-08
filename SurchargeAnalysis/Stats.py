@@ -30,7 +30,7 @@ data = (data.withColumn("hour",hour('pickupTime'))
 
 hourly = data.select('hour','day','month','year','surcharge')
 
-hourly = data.groupBy('year','month','day','hour').sum('surcharge')
+hourly = data.groupBy('year','month','day','hour').sum('surcharge').coalesce(1)
 
 (hourly.write.mode('overwrite')
        .format("com.databricks.spark.csv")
@@ -38,7 +38,7 @@ hourly = data.groupBy('year','month','day','hour').sum('surcharge')
 
 weekly = data.select('week','surcharge')
 
-weekly = data.groupBy('week').sum('surcharge')
+weekly = data.groupBy('week').sum('surcharge').coalesce(1)
 
 (weekly.write.mode('overwrite')
        .format("com.databricks.spark.csv")

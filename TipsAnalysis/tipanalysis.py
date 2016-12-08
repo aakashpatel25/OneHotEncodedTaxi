@@ -21,22 +21,17 @@ myParquet = sqlContext.read.parquet(year1,year2,year3,year4)
 #getting data of pickupTime and tipAmount
 pickupDistTip = myParquet.select('pickupTime','tipAmount').where('tipAmount > 0')
 
-hourlyTips = (pickupDistTip
-    .groupBy(hour("pickupTime").alias("hour"))
-    .agg(avg("tipAmount").alias("avgHourTips")).coalesce(1))
+pickupDistTip = (myParquet.select(hour("pickupTime").alias("hour"),
+                                dayofmonth("pickupTime").alias("day"),
+                                'tipAmount'))
 
-#output to csv    
-hourlyTips.write.mode('overwrite').format("com.databricks.spark.csv") \
-					.save('s3://taxidata.com/TipAnalysis/hourlytips')
-
-dailyTips = (pickupDistTip
-    .groupBy(dayofmonth("pickupTime").alias("day"))
+tipsAnalysis = (pickupDistTip
+    .groupBy('day','hour')
     .agg(avg("tipAmount").alias("avgDailyTips")).coalesce(1))
     
 #output to csv
-dailyTips.write.mode('overwrite').format("com.databricks.spark.csv") \
+tipsAnalysis.write.mode('overwrite').format("com.databricks.spark.csv") \
 					.save('s3://taxidata.com/TipAnalysis/dailytips')
-
 
 #getting data of driverid and tipAmount
 pickupTimeTip = myParquet.select('driverId','tipAmount').where('tipAmount > 0')

@@ -25,8 +25,8 @@ def parseSpeed(speed):
 	'''
 	return float(int(speed * 10)) / 10
 
-inputDir = '/home/julie/School/BDProjectData/2013/1'
-myParquet = sqlContext.read.parquet(inputDir)
+
+myParquet = sqlContext.read.parquet(year1,year2,year3,year4)
 
 # myParquet = sqlContext.read.parquet(year1,year2,year3,year4)
 
@@ -42,12 +42,12 @@ speed = allSpeed.where('speed < 100')
 # Metric 1: average speed by month
 averageSpeedByMonth = speed.groupBy('year','month').mean('speed').orderBy('year','month').coalesce(1)
     
-averageSpeedByMonth.write.mode('overwrite').format("com.databricks.spark.csv").save('monthlyAvgSpeed')
+averageSpeedByMonth.write.mode('overwrite').format("com.databricks.spark.csv").save(s3+'monthlyAvgSpeed')
 
 # Metric 2: average speed by hour
 averageSpeedByHour = speed.groupBy('hour').mean('speed').orderBy('hour').coalesce(1)
 
-averageSpeedByHour.write.mode('overwrite').format("com.databricks.spark.csv").save('hourlyAvgSpeed')
+averageSpeedByHour.write.mode('overwrite').format("com.databricks.spark.csv").save(s3+'hourlyAvgSpeed')
 
 # Metric 3: number of trips made at certain speed
 # We can use this to see if there are any anomalies or general trends
@@ -55,4 +55,4 @@ speedRDD = allSpeed.select('speed').rdd
 totalBySpeedRDD = speedRDD.map(lambda s: (parseSpeed(s.speed), 1)).reduceByKey(add).sortByKey()
 totalBySpeed = sqlContext.createDataFrame(totalBySpeedRDD, ['speed', 'count']).coalesce(1)
 
-totalBySpeed.write.mode('overwrite').format("com.databricks.spark.csv").save('countBySpeed')
+totalBySpeed.write.mode('overwrite').format("com.databricks.spark.csv").save(s3+'countBySpeed')
