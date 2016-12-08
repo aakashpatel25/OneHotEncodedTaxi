@@ -1,10 +1,21 @@
+'''
+@author:ruturajp
+
+The purpose of this program is to find the number of trips paid by credit card and cash
+for a distance range.
+As the payment types are still not generalized after the ETL process, it has to further filter
+for getting accurate details about the creditcard and cash payments.
+The output filtered data will be imported to Tableau inorder to find details with visualizations.
+
+Program includes the number of trips travelled in a distance range in which the payment method is
+either credit card or cash (disputed trips and voided trips are discarded)
+
+'''
 from pyspark import SparkConf, SparkContext
 from pyspark.sql.types import StructType, StructField, FloatType
-from pyspark.sql import  Row
 from pyspark.sql import SQLContext
 import sys, operator
 import re, string
-from datetime import datetime
 from pyspark.sql.functions import *
 
 conf = SparkConf().setAppName('Trips By Distance Analysis')
@@ -35,6 +46,7 @@ def changeToRange(trip):
 #initiating range
 udfChangeToRange = udf(changeToRange, FloatType())
 
+#select filtered year, month, range from the parquet files
 transDF = myParquet.select(trim(upper(myParquet.paymentType)).alias('paymentType'), \
                             year('pickupTime').alias('year') \
                             ,month('pickupTime').alias('month'),\

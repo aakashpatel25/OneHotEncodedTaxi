@@ -34,7 +34,7 @@ year4 = s3+'2013/'
 myParquet = sqlContext.read.parquet(year1,year2,year3,year4)
 
 #getting data of pickupTime and tipAmount
-pickupDistTip = myParquet.select('pickupTime','tipAmount').where('tipAmount > 0')
+pickupDistTip = myParquet.select('pickupTime','tipAmount').where('tipAmount > 0').cache()
 
 pickupDistTip = (myParquet.select(hour("pickupTime").alias("hour"),
                                 dayofmonth("pickupTime").alias("day"),

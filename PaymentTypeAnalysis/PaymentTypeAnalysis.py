@@ -1,9 +1,24 @@
+'''
+@author:ruturajp
+
+The purpose of this program is to find the trend of number of trips paid by credit card and cash
+over different attributes.
+
+We want to analyze the amount in cash still used to pay for taxi rides in NYC over the amount paid
+with credit cards.
+
+The output filtered data will be imported to Tableau inorder to find details with visualizations.
+
+The program includes following details-
+-Cash and credit card payments for trips over the period of different months and years 
+from 2010 till 2013
+- Amount being paid via cash and credit cards over different months and years from 2010 till 2013
+
+'''
 from pyspark import SparkConf, SparkContext
-from pyspark.sql.types import StructType, StructField, FloatType
 from pyspark.sql import  Row
 from pyspark.sql import SQLContext
 import sys, operator
-from datetime import datetime
 from pyspark.sql.functions import *
 
 conf = SparkConf().setAppName('Payment Type Analysis')

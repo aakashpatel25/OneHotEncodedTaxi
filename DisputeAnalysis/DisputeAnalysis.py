@@ -36,7 +36,7 @@ transDF = myParquet.select(trim(upper(myParquet.paymentType)).alias('paymentType
                     ,year('pickupTime').alias('year') \
                     ,month('pickupTime').alias('month') \
                     ,hour('pickupTime').alias('hour') \
-                    ,'totalAmount').where('totalAmount > 0')
+                    ,'totalAmount').where('totalAmount > 0').cache()
 
 #no of disputed trips per hour
 disputed_per_hour = (transDF.filter("paymentType = 'DIS'")
