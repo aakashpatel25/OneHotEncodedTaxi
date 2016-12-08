@@ -6,7 +6,7 @@
 			"Sid": "Stmt1357935647218",
 			"Effect": "Allow",
 			"Principal": {
-				"AWS": "arn:aws:iam::AWS-ACCOUNT-NUMBER:root"
+				"AWS": "arn:aws:iam::AWS-Account-1:root"
 			},
 			"Action": "s3:*",
 			"Resource": "arn:aws:s3:::taxidata.com/*"
@@ -15,7 +15,19 @@
 			"Sid": "Stmt1357935676138",
 			"Effect": "Allow",
 			"Principal": {
-				"AWS": "arn:aws:iam::AWS-ACCOUNT-NUMBER:root"
+				"AWS": "arn:aws:iam::AWS-Account-1:root"
+			},
+			"Action": [
+				"s3:GetObject",
+				"s3:PutObject"
+			],
+			"Resource": "arn:aws:s3:::taxidata.com/*"
+		},
+		{
+			"Sid": "Stmt1357935676138",
+			"Effect": "Allow",
+			"Principal": {
+				"AWS": "arn:aws:iam::AWS-Account-1:root"
 			},
 			"Action": [
 				"s3:GetObject",
@@ -27,7 +39,7 @@
 			"Sid": "Stmt1",
 			"Effect": "Allow",
 			"Principal": {
-				"AWS": "arn:aws:iam::AWS-ACCOUNT-NUMBER:root"
+				"AWS": "arn:aws:iam::AWS-Account-2:root"
 			},
 			"Action": "s3:*",
 			"Resource": "arn:aws:s3:::taxidata.com/*"
@@ -36,13 +48,33 @@
 			"Sid": "Stmt2",
 			"Effect": "Allow",
 			"Principal": {
-				"AWS": "arn:aws:iam::AWS-ACCOUNT-NUMBER:root"
+				"AWS": "arn:aws:iam::AWS-Account-2:root"
 			},
 			"Action": [
 				"s3:GetObject",
-				"s3:PutObject"
+				"s3:PutObject",
+				"s3:*",
+				"s3:DeleteObject"
 			],
 			"Resource": "arn:aws:s3:::taxidata.com/*"
-		}
+		},
+		{
+			"Sid": "Stmt3",
+			"Effect": "Allow",
+			"Principal": {
+				"AWS": "arn:aws:iam::AWS-Account-2:root"
+			},
+			"Action": "*",
+			"Resource": "arn:aws:s3:::taxidata.com/*"
+		},
+		{
+			"Sid": "Stmt4",
+			"Effect": "Allow",
+			"Principal": {
+				"AWS": "arn:aws:iam::AWS-Account-2:root"
+			},
+			"Action": "*",
+			"Resource": "arn:aws:s3:::taxidata.com/*"
+		},
 	]
 }

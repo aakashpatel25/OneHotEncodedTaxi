@@ -1,6 +1,8 @@
 # OneHotEncodedTaxi
 Big Data Project
 
+Analyzed New York Yellow Taxi's data from 2010 to 2013 to determine various patterns such as driver's yearly salary, surcharge prediction, passenger count, trip counts and many more using Amazon Web Services. Size of the dataset was 140 GB. Used Python, Spark, Parquet, Tableau, AWS EC2, AWS EMR, AWS S3, AWS IAM for performing analysis.
+
 <br>
 
 ## Data Dictionary

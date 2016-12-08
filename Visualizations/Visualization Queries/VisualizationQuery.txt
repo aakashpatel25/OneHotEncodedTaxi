@@ -1,0 +1,20 @@
+# Monthly and Yearly Time Parameter Query
+Case [Time Parameter]
+WHEN 'Year' THEN [Year]
+ELSE [Month]
+end
+
+
+# Hourly, Daily, Monthly and Yearly time parameter query.
+Case [Time Parameter]
+WHEN 'Year' THEN [Year]
+WHEN 'Month' THEN [Month]
+WHEN 'Day' THEN [Day]
+ELSE [Hour]
+end
+
+# Monthly and Daily Time Parameter Query.
+Case [Time Parameter]
+WHEN 'Month' THEN [Month]
+ELSE [Day]
+end
