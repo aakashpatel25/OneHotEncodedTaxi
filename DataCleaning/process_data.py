@@ -17,6 +17,7 @@ conf = SparkConf().setAppName('Taxi Data Processing')
 sc = SparkContext(conf=conf)
 sqlContext = SQLContext(sc)
 
+# Schema for fare_schema CSV file.
 fare_schema = StructType([
     			StructField('carId', LongType(), True),
     			StructField('driverId', LongType(), True),
@@ -31,6 +32,7 @@ fare_schema = StructType([
     			StructField('totalAmount', FloatType(), True),
 ])
 
+# Schema for trip_schema CSV file.
 trip_schema = StructType([
     			StructField('carId', LongType(), False),
     			StructField('driverId', LongType(), False),
@@ -93,6 +95,8 @@ tripDF = (sqlContext.read.format('com.databricks.spark.csv')
 #print ''
 #print ''
 
+
+# Join two different CSVs to make it a single table. 
 tripData = (tripDF.join(fareDF, (tripDF['carId'] == fareDF['carId']) & \
 								(tripDF['driverId'] == fareDF['driverId']) & \
 								(tripDF['pickupTime'] == fareDF['pickupTime']) & \
@@ -103,4 +107,5 @@ tripData = (tripDF.join(fareDF, (tripDF['carId'] == fareDF['carId']) & \
 					.drop(fareDF['vendorType'])
 					.drop(fareDF['pickupTime'])).coalesce(30)
 
+# Save data in form of Parquet file. 
 tripData.write.format('parquet').save(output,mode='overwrite')

@@ -1,3 +1,11 @@
+'''
+	@author: amoghari
+
+	Purpose of this queries is to create new multi-dimensional parameters. This
+	would then be used to create dynamic visalization in the Tabluea which would
+	enable chaning the axis of the given cloumn dynamically. 
+'''
+
 # Monthly and Yearly Time Parameter Query
 Case [Time Parameter]
 WHEN 'Year' THEN [Year]

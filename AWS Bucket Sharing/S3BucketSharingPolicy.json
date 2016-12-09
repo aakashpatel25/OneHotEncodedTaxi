@@ -1,4 +1,5 @@
 {
+	"_comment": "This is a policy to grant permission to other users to your S3 Bucket.",
 	"Version": "2008-10-17",
 	"Id": "Policy1357935677554",
 	"Statement": [

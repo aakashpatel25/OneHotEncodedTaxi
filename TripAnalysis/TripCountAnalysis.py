@@ -26,8 +26,11 @@ year3 = s3+'2012/'
 year4 = s3+'2013/'
 output = s3+'TripCount/'
 
+# Read data from S3 Bucket.
 taxidata = sqlContext.read.parquet(year1,year2,year3,year4)
 
+# Formats the datetime format and appends four rows to the data frame consisting
+# of year, month, day and hour. 
 tripCount = (taxidata.select(year('pickupTime').alias('year'),\
 							 month('pickupTime').alias('month'),\
 							 dayofmonth('pickupTime').alias('day'),\
@@ -40,6 +43,8 @@ tripCount = tripCount.groupBy('year','month','day','hour').count().coalesce(1)
 				.format("com.databricks.spark.csv")
 				.save(output+'TripCount'))
 
+# Formats the datetime to contain week of the year and modifies the dataframe such
+# that it contains week and drivierId.
 tripCountWeek = (taxidata.select(weekofyear('pickupTime').alias('week'),\
 							    'driverId'))
 

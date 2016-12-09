@@ -1,3 +1,10 @@
+'''
+	@author: amoghrai
+
+	This Document contains the links to the dynamically created visualizations.
+	Repository does contain the screenshot of static and dynamic visaulizations.
+'''
+
 Dynamic Visualization Links
 
 New York Taxi Trip Analysis
