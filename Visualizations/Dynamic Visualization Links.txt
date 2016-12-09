@@ -1,0 +1,10 @@
+Dynamic Visualization Links
+
+New York Taxi Trip Analysis
+https://public.tableau.com/profile/aakashmoghariya#!/vizhome/NewYorkCitysYellowTaxiTripAnalysis_0/TripAnalysis
+
+New York Taxi Surcharge Analysis
+https://public.tableau.com/profile/aakashmoghariya#!/vizhome/NewYorkCitysYellowTaxiTripAnalysis/PaymentSurcharge
+
+New York Taxi Tips and Payment Analysis
+https://public.tableau.com/profile/ruturaj.patel#!/vizhome/TipsandPaymentAnalysisofYellowTaxi_0/TipsAndPayment
