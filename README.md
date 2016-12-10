@@ -68,14 +68,14 @@ StructType([
 
 We have provided a number of PySpark scripts that we used to generate summary statistics from the raw data. Each file reads all data from S3 (assuming the directory structure above) and generates CSV files of the summary statistics. Here is a list of the current scripts and the summary statistics they generate (the location of the generated csv files is indicated in brackets):
 
-DisputeAnalysis/dispute_analysis.py: count of disputed trips by hour (DisputeAnalysis/DisputePerHour) and month (DisputeAnalysis/DisputesPerMonth). Total amount of money involved in disputed trips (DisputeAnalysis/DisputedAmount)
-PaymentTypeAnalysis/payment_type_analysis.py: count of trips paid by cash or credit card (PaymentTypeAnalysis/cashCCTrips). Amount of money paid in cash or credit card every month (PaymentTypeAnalysis/amountPaidCSHCC)
-SalaryAnalysis/AverageSalaryMonthly.py: average salary of each driver per month (MonthYearSalary) and per year (YearlySalary)
-SpeedAnalysis/speedAnalysis.py: average speed per month (monthlyAvgSpeed) and per hour (hourlyAvgSpeed). Count of number of trips per average speed rounded to the nearest .1 mph (countBySpeed)
-SurchargeAnalysis/Stats.py: count of surcharge amounts per hour (SurchargeAnalysis/HourlySurge) and per week (SurchargeAnalysis/WeekWiseSurge)
-TipsAnalysis/tipanalysis.py: average amount in tips per hour (TipAnalysis/hourlytips) and per day (TipAnalysis/dailytips). Average tips earned by driver (TipAnalysis/averageDriverTips)
-TripAnalysis/TripCountAnalysis.py: raw count of all trips (TripCount), trips per week (WeekWiseTrips)
-TripAnalysis/trips_on_distance.py: count of trips by bucketed ranges (TripDistanceAnalysis/tripsByRange)
+*DisputeAnalysis/dispute_analysis.py: count of disputed trips by hour (DisputeAnalysis/DisputePerHour) and month (DisputeAnalysis/DisputesPerMonth). Total amount of money involved in disputed trips (DisputeAnalysis/DisputedAmount)
+*PaymentTypeAnalysis/payment_type_analysis.py: count of trips paid by cash or credit card (PaymentTypeAnalysis/cashCCTrips). Amount of money paid in cash or credit card every month (PaymentTypeAnalysis/amountPaidCSHCC)
+*SalaryAnalysis/AverageSalaryMonthly.py: average salary of each driver per month (MonthYearSalary) and per year (YearlySalary)
+*SpeedAnalysis/speedAnalysis.py: average speed per month (monthlyAvgSpeed) and per hour (hourlyAvgSpeed). Count of number of trips per average speed rounded to the nearest .1 mph (countBySpeed)
+*SurchargeAnalysis/Stats.py: count of surcharge amounts per hour (SurchargeAnalysis/HourlySurge) and per week (SurchargeAnalysis/WeekWiseSurge)
+*TipsAnalysis/tipanalysis.py: average amount in tips per hour (TipAnalysis/hourlytips) and per day (TipAnalysis/dailytips). Average tips earned by driver (TipAnalysis/averageDriverTips)
+*TripAnalysis/TripCountAnalysis.py: raw count of all trips (TripCount), trips per week (WeekWiseTrips)
+*TripAnalysis/trips_on_distance.py: count of trips by bucketed ranges (TripDistanceAnalysis/tripsByRange)
 
 Additionally, in SurchargeAnalysis/SurchargeMl.py, you'll find code to build a logistic regression model to predict whether or not a taxi trip will have a surcharge added to the fare. 
 
