@@ -1,0 +1,150 @@
+To run the programs in the repository please follow a set of following instructions.
+
+Note: We have skipped AWS EC2 Command to speed up the processing of the data and running the entire program.
+
+Instential AWS EMR Cluster with 5 nodes with x2large capacity,
+
+First download the dataset using the commands,
+
+$ wget https://databank.illinois.edu/datafiles/1uqgv/download
+$ wget https://databank.illinois.edu/datafiles/8yf9i/download
+$ wget https://databank.illinois.edu/datafiles/k1hwt/download
+$ wget https://databank.illinois.edu/datafiles/ws2jn/download
+
+Unzip the dataset recursively using,
+
+$ ./recursiveUnzip.sh
+
+Script given above recursively unzips all of the files in the specified folder.
+
+
+
+Once the data has been unzipped run,
+
+$ ./processDataScript.sh
+
+The script given above will convert all the dataset into parquet format. 
+
+
+
+Once the data has been formatted to move the data to AWS S3 the script given below will need to be exectuted. However, before doing that pelase set up the AWS IAM user by following the tutorial at AWS Tutorial/AWSTransferDataFromEC2toS3.pdf
+
+Once the IAM Permission has been granted configured, install Amazon Web Service Command Line Interface using,
+
+$ pip install awscli
+
+Then configure the credentials in AWSCLI using the command stated below,
+
+$ aws configure
+
+Make sure proper credentials and region has been set before proceeding. Execute the script to move the processed data from AWS EMR to AWS S3,
+
+$ ./uploadToAws.sh
+
+Enter proper inputs and it should move the data to S3 bucket.
+
+
+
+
+Once the data has been moved to S3 buckets, configure the S3 bucket to provide access to the project parterns. To do that click on the S3 bucket, under the permission section click on edit permission and enter the bucket policy code found at, 
+
+AWS Bucket Policy/S3BucketSharingPolicy.json
+
+
+
+In order to read the data from parquet file to spark program easily we will need to restructre the directory structure, to restructure the directory stucture execute the script given below,
+
+$ ./movefiles.sh
+
+To restructure the directory structure within S3 Bucket.
+
+
+
+
+
+Now one can run spark-program for the purpose of analysis, make sure each of the program is moved into the EMR from S3 or local machine by using the command,
+
+if local to EMR,
+
+$ scp -i <key_par.pem> <program> <EMR MASETER NODE ADDRESS>:
+
+if moving from S3,
+
+$ aws s3 cp <s3://bucketurl/program> .
+
+
+
+
+
+Note: All S3 bucket's input and output are hard-coded in program so that they are easier to execute. 
+
+
+DisputeAnalysis/dispute_analysis.py
+Count of disputed trips by hour and month. Total amount of money involved in disputed trips.
+
+$ spark-submit --master yarn dispute_analysis.py
+
+
+
+PaymentTypeAnalysis/payment_type_analysis.py
+Count of trips paid by cash or credit card. Amount of money paid in cash or credit card every month.
+
+$ spark-submit --master yarn payment_type_analysis.py
+
+
+
+SalaryAnalysis/AverageSalaryMonthly.py
+Average salary of each driver per month and per year.
+
+$ spark-submit --master yarn AverageSalaryMonthly.py
+
+
+
+SpeedAnalysis/speedAnalysis.py
+Average speed per month and per hour. Count of number of trips per average speed rounded to the nearest .1 mph.
+
+$ spark-submit --master yarn speedAnalysis.py
+
+
+
+SurchargeAnalysis/Stats.py 
+Count of surcharge amounts per hour and per week.
+
+$ spark-submit --master yarn Stats.py
+
+
+
+TipsAnalysis/tipanalysis.py 
+Average amount in tips per hour and per day Average tips earned by driver.
+
+$ spark-submit --master yarn tipanalysis.py
+
+
+
+
+TripAnalysis/TripCountAnalysis.py 
+Raw count of all trips, trips per week.
+
+$ spark-submit --master yarn TripCountAnalysis.py
+
+
+
+TripAnalysis/trips_on_distance.py
+Count of trips by bucketed ranges.
+
+$ spark-submit --master yarn trips_on_distance.py
+
+
+
+SurchargeAnalysis/SurchargeMl.py
+Code to build a logistic regression model to predict whether or not a taxi trip will have a surcharge added to the fare.
+
+$ spark-submit --master yarn SurchargeMl.py
+
+
+
+
+In the Data Cleaning folder, we have scripts to assign each trip's coordinates to its corresponding neighborhood within New York City using Python's Shapely library. In order to use this library on EMR, you will need to install Shapely and all of its dependencies on each node in your cluster. We have provided a bootstrap script in DataCleaning/bootstrap.sh to do this; it just needed to be specified as a bootstrap action while spinning up the EMR cluster. Note: this script is not functional in its current form, but can be modified or used as an example if you're looking to do any area-based analysis yourself. The geojson file of NYC neighorhoods is taken from http://catalog.opendata.city/dataset/pediacities-nyc-neighborhoods.
+
+
+These scripts have the input and output directory paths already specified. You will need to change the name of the S3 directory to match your own.
