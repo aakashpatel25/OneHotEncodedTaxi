@@ -86,6 +86,7 @@ These scripts have the input and output directory paths already specified. You w
 To run these scripts on EMR, you can run this basic command 
 ```shell
 spark-submit --master yarn filename
+```
 
 ## Interesting Insights from our Analysis
 
