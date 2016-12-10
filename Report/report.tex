@@ -64,7 +64,7 @@
 
 \section{Introduction}
 
-In 2013, the New York City Taxi and Limousine commission released data on taxi trips from yellow, green and for-hire vehicles from 2010 through 2013 through a freedom of information law request. The dataset consists of 1.5 billion records. Compared to the datasets that we had seen up to this point, this was truly big data! The dataset was downloaded from the Illinois Data Bank\cite{dataset}.
+In 2013, the New York City Taxi and Limousine commission released data on taxi trips from yellow, green and for-hire vehicles from 2010 through 2013 through a freedom of information law request. The dataset consists of 1.5 billion records. Compared to the datasets that we had seen up to this point, this was truly big data! The dataset was downloaded from the Illinois Data Bank \cite{dataset}.
 
 The first major obstacle that we faced with this dataset was its sheer size. The Illinois Data Bank allowed us to download all of the data as a zip file of around 28GB, which took about an hour with the super-fast campus wifi. However, this zip file consisted of several other layers of zipped directories and csv files, which quickly ballooned to over 140 GB when decompressed. While this amount of data would easily fit on an external hard drive, we needed the data in a location where it could be easily accessed and processed. We were also wary of working with csv files, preferring a format more conducive to processing (as opposed to just storing) a large amount of data. Our goal, ultimately, was to clean and summarize the massive dataset in order to visualize the final results and find useful patterns.
 
@@ -72,7 +72,7 @@ Initially, we planned on combining the taxi dataset with similar datasets, like 
 
 \section{Amazon Web Services}
 
-We decided to use Amazon Web Services (AWS)\cite{aws} to store and process our data. We chose this technology because it is very popular in industry and we could obtain free AWS credits through our studen Github accounts. Using AWS for both data storage and analysis helped mitigate the costly effects of transferring data for executing Spark programs. 
+We decided to use Amazon Web Services (AWS) \cite{aws} to store and process our data. We chose this technology because it is very popular in industry and we could obtain free AWS credits through our studen Github accounts. Using AWS for both data storage and analysis helped mitigate the costly effects of transferring data for executing Spark programs. 
 
 Amazon has many cloud computing solutions, but we only used three of these: Simple Storage Service (S3) for data warehousing, Elastic Computing Cloud (EC2) for data loading and Elastic Map Reduce (EMR) for analysis. These services turned out to be perfect for our needs because of their scalable nature. EMR clusters are made up of EC2 instances, and they provide flexibility in choosing how much computing power goes into an EMR cluster. When we had tasks that seemed to be taking a long time on a less powerful cluster, we could speed up execution by requesting a cluster with more nodes. EMR has many frameworks that can be installed on a cluster, so we were able to generate a Spark cluster in minutes without the hassle of installing Spark ourselves.
 
@@ -98,7 +98,7 @@ During this project we learned to manage, install and modify the EMR cluster whi
 With such a large amount of data with a variety of features, there was a lot of opportunity for analysis. We generated summary statistics on many different aspects of the data, summarized below:
 
  \begin{table}
-        \centering
+	\centering
         \begin{tabular}{|c|c|}
         \hline
  	Disputed Trips & count per hour, count per month, total per year \\
@@ -107,7 +107,7 @@ With such a large amount of data with a variety of features, there was a lot of 
 	\hline
 	Salary by Driver & average monthly salary, average yearly salary \\
 	\hline
-	Speed Analysis & average by month, average by hour, count of speeds of all trips (rounded) \\
+	Speed Analysis & average by month and hour, count of speeds of all trips (rounded) \\
 	\hline
 	Tips & average by hour, average by day of month, average by driver \\
 	\hline
