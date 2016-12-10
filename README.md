@@ -39,6 +39,11 @@ New York is one of the busiest cities in the world. People in New York have been
 
 * The number of cash transactions were high in 2010, whereas the number of credit card transactions are constantly increasing into 2013.
 
+##An interesting analysis turned into a Lesson in Failure
+
+* The taxi dataset has Pickup Latitude, Longitude and Dropoff Latitude and longtitude which we though can be used to perform geospatial analysis and cluster a range to an Area to find interesting patterns. We obtained a geojson file of New York City neighborhoods and used Python’s Shapely library to assign neighborhoods to pairs of coordinates.
+
+* The goal was to add columns for the neighborhood for each of the pickup and dropoff locations and saving back the data with the new columns for later analysis.Unfortunately, we were unable to create these new parquet files, even after running the code for 4 hours on the EMR cluster. We found that the process of writing the new data back to parquet files is costly affair in EMR. After some investigation, we found blog posts from people who had a similar problem of parquet files taking a long time to write to S3 which we have decided to solve in our future work.​
 
 ## Results And Visualization Links
 
